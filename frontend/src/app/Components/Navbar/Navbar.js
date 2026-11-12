@@ -1,110 +1,99 @@
 "use client";
-import Image from 'next/image'
-import React, { useState } from 'react'
-import logo from "../../../../public/assets/image 20.svg"
-import  "./Navbar.css"
-import menu from "../../../../public/assets/menu.png"
 
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import logo from "../../../../public/assets/image 20.svg";
+import "./Navbar.css";
+import menu from "../../../../public/assets/menu.png";
 
 const navArray = [
-    {
-    title : "EVENTS" , 
-    link : "/events"
-} , 
-    {
-    title : "MEDIA" , 
-    link : "/media"
-} , 
-    {
-    title : "TEAMS" , 
-    link : "/teams"
-} , 
-    {
-    title : "ABOUT US" , 
-    link : "/about"
-} , 
-    {
-    title : "LOGIN" , 
-    link : "/api/auth/signin"
-} , 
-
-]
+  { title: "EVENTS", link: "/events" },
+  { title: "MEDIA", link: "/media" },
+  { title: "TEAMS", link: "/teams" },
+  { title: "ABOUT US", link: "/about" },
+  { title: "LOGIN", link: "/login" },
+];
 
 export default function Navbar() {
-  const [open  , setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
+
   return (
-    <div className='bg-[#101010] justify-between md:pl-24 md:pr-10 p-7 flex flex-col md:flex-row  font-lexend align-middle w-full m-auto  '>
-      <div className='flex flex-row justify-between'>
-      <Image
-      src={menu} 
-      alt="menu"
-      className={`w-10 h-10 relative top-9 invert md:hidden transition-all duration-500 ${!open ? "rotate-90" : "rotate-0"}`}
-      onClick={()=>setOpen(!open)}
-      />
+    <nav className="bg-[#101010] justify-between md:pl-24 md:pr-10 p-7 flex flex-col md:flex-row font-lexend align-middle w-full m-auto border-b border-zinc-800/60">
+      <div className="flex flex-row justify-between items-center">
+        <Image
+          src={menu}
+          alt="menu"
+          className={`w-8 h-8 relative top-0 invert md:hidden cursor-pointer transition-all duration-500 ${
+            !open ? "rotate-90" : "rotate-0"
+          }`}
+          onClick={() => setOpen(!open)}
+        />
 
-      <Image
-      src={logo}
-      alt = "Logo"
-      className='sm:mx-auto my-10 md:m-0'
-      />
+        <Link href="/" className="sm:mx-auto md:m-0">
+          <Image src={logo} alt="IITR Esports Logo" priority />
+        </Link>
       </div>
-      {/* mobile */}
-      <div className={`md:hidden flex flex-col overflow-hidden transition-all duration-500 ${open?"h-0":"h-56"} `}>
-      {
-        
-          navArray.map((navLink  , i ) => {
-            if(i!=4)
-              return (
 
-                <a key={i} href={navLink.link} className='navlinkStyle my-5 ml-5 tracking-widest '>
-                    {navLink.title}
-                </a>
-              )
-            else
-                return(
-                  
-
-                  <button onClick={()=>{
-                    window.location.href="/api/auth/signin";
-                  }} className='bg-purple-700 font-lexend font-black hover:bg-white transition-all duration-300 hover:text-black m-auto text-white  py-[10px] px-[60px]'>LOGIN
-                  </button>
-                  
-              )
-
-          }
-)  
-      }
-
-      </div>
-      {/* desktop */}
-      <div className='md:flex flex-row md:m-10 m-auto my-10 hidden'>
-      {
-        
-        navArray.map((navLink  , i ) => {
-          if(i!=4)
+      {/* Mobile Drawer */}
+      <div
+        className={`md:hidden flex flex-col overflow-hidden transition-all duration-500 ${
+          open ? "h-0" : "h-64 pt-4"
+        }`}
+      >
+        {navArray.map((navLink, i) => {
+          if (i !== 4) {
             return (
-
-              <a key={i} href={navLink.link} className='navlinkStyle my-5 ml-5 tracking-widest '>
-                  {navLink.title}
-              </a>
-            )
-          else
-              return(
-                <button onClick={()=>{
-                  window.location.href="/api/auth/signin";
-                }} className='bg-purple-700 tracking-widest ml-10 font-lexend font-black hover:bg-white transition-all duration-300 text-sm hover:text-black m-auto text-white  py-[5px] px-[30px]'>LOGIN
-                </button>
-                
-            )
-
-        }
-)  
-    }
-
+              <Link
+                key={i}
+                href={navLink.link}
+                onClick={() => setOpen(true)}
+                className="navlinkStyle my-3 ml-5 tracking-widest text-zinc-300 hover:text-white"
+              >
+                {navLink.title}
+              </Link>
+            );
+          } else {
+            return (
+              <Link
+                key={i}
+                href="/login"
+                onClick={() => setOpen(true)}
+                className="bg-purple-600 font-lexend font-black hover:bg-white transition-all duration-300 hover:text-black m-auto text-white py-[10px] px-[60px] text-center rounded-lg mt-2"
+              >
+                LOGIN
+              </Link>
+            );
+          }
+        })}
       </div>
-      
-      
 
-    </div>
-  )
+      {/* Desktop Menu */}
+      <div className="md:flex flex-row md:m-auto md:mr-0 my-auto hidden items-center gap-2">
+        {navArray.map((navLink, i) => {
+          if (i !== 4) {
+            return (
+              <Link
+                key={i}
+                href={navLink.link}
+                className="navlinkStyle mx-4 tracking-widest text-sm text-zinc-300 hover:text-white transition-colors"
+              >
+                {navLink.title}
+              </Link>
+            );
+          } else {
+            return (
+              <Link
+                key={i}
+                href="/login"
+                className="bg-purple-600 tracking-widest ml-6 font-lexend font-black hover:bg-white transition-all duration-300 text-xs hover:text-black text-white py-2.5 px-6 rounded-lg uppercase shadow-lg shadow-purple-600/20"
+              >
+                LOGIN
+              </Link>
+            );
+          }
+        })}
+      </div>
+    </nav>
+  );
 }
