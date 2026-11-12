@@ -71,6 +71,9 @@ model User {
   teamId    String?
   team      Team?   @relation("TeamMembers", fields: [teamId], references: [id])
 
+  // Community & News
+  announcements Announcement[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -104,10 +107,10 @@ model Team {
 model Tournament {
   id        String           @id @default(cuid())
   title     String
-  gameTitle String // e.g., Valorant, BGMI
+  gameTitle String // e.g., Valorant, BGMI, CS2
   startDate DateTime
   endDate   DateTime
-  format    String // e.g., Single Elimination, Round Robin
+  format    String // e.g., "Single Elimination", "Round Robin"
   status    TournamentStatus @default(UPCOMING)
 
   matches Match[]
@@ -129,6 +132,18 @@ model Match {
 
   score         String? // e.g., "13-11"
   scheduledTime DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Announcement {
+  id       String   @id @default(cuid())
+  title    String
+  content  String   @db.Text
+  date     DateTime @default(now())
+  authorId String
+  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
