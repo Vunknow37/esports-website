@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { contactSchema, sendContactEmail } from "@/app/actions/contact";
 import Navbar from "@/app/Components/Navbar/Navbar";
 import Footer from "@/app/Components/Footer";
@@ -30,12 +31,14 @@ export default function ContactPage() {
     const result = await sendContactEmail(data);
 
     if (result.success) {
+      toast.success("Dispatch submitted successfully! We'll reply within 24 hours.");
       setSubmissionStatus({
         success: true,
         message: "Your message has been dispatched! Our operations team will respond within 24 hours.",
       });
       reset();
     } else {
+      toast.error(result.error || "Failed to submit inquiry.");
       setSubmissionStatus({
         success: false,
         message: result.error || "An error occurred while submitting your message.",

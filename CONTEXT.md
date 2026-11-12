@@ -205,3 +205,4 @@ To ensure smooth local development before a PostgreSQL database is initialized:
    - Always commit template changes to `frontend/.env.example`.
 5. **Security**:
    - RSA `.pem` keys, `.env` files, and credentials are strictly ignored in `.gitignore`. Never commit keys to version control.
+

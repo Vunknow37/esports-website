@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 import Navbar from "@/app/Components/Navbar/Navbar";
 import Footer from "@/app/Components/Footer";
 import EditProfileModal from "./EditProfileModal";
+import SignOutButton from "@/app/Components/SignOutButton";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -97,6 +98,7 @@ export default async function DashboardPage() {
             >
               Browse Tournaments
             </Link>
+            <SignOutButton />
           </div>
         </div>
 

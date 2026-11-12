@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { toast } from "sonner";
+import { registerTeamForTournament } from "@/app/actions/tournamentActions";
 
 export default function RegisterTeamButton({ tournamentId, tournamentTitle, status }) {
   const { data: session, status: authStatus } = useSession();
@@ -12,12 +14,8 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(null);
 
-  // Registration is only available for UPCOMING tournaments
-  if (status !== "UPCOMING") {
-    return null;
-  }
+  if (status !== "UPCOMING") return null;
 
-  // If user is unauthenticated
   if (authStatus === "unauthenticated" || !session) {
     return (
       <div className="flex flex-col sm:flex-row items-center gap-3">
@@ -34,16 +32,23 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!teamName.trim()) return;
+    if (!teamName.trim()) {
+      toast.error("Please enter a valid team name.");
+      return;
+    }
 
     setLoading(true);
-    // Simulated registration call
-    setTimeout(() => {
-      setLoading(false);
+    const res = await registerTeamForTournament(tournamentId, teamName);
+    setLoading(false);
+
+    if (res.success) {
+      toast.success(res.message);
       setIsRegistered(true);
-      setMessage(`Successfully registered "${teamName}" for ${tournamentTitle}!`);
+      setMessage(res.message);
       setIsOpen(false);
-    }, 700);
+    } else {
+      toast.error(res.error || "Failed to register team.");
+    }
   };
 
   if (isRegistered) {
@@ -70,7 +75,6 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
         <span>Register Team</span>
       </button>
 
-      {/* Registration Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 p-6 md:p-8 shadow-2xl relative">
@@ -120,4 +124,3 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
     </>
   );
 }
-

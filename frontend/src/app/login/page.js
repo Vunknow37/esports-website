@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import heroPortalBg from "../../../../public/assets/hero-portal.png";
 
 export default function LoginPage() {
   const [loadingProvider, setLoadingProvider] = useState(null);
@@ -24,7 +23,7 @@ export default function LoginPage() {
       {/* Background artwork */}
       <div className="absolute inset-0 pointer-events-none select-none -z-10">
         <Image
-          src={heroPortalBg}
+          src="/assets/hero-portal.png"
           alt="Arena Backdrop"
           fill
           priority

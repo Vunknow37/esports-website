@@ -153,15 +153,15 @@ export default async function MatchesSpotlight() {
 
                 {/* Card Bottom: Watch Live CTA */}
                 <div className="mt-6 pt-4 border-t border-zinc-800/80">
-                  <button
-                    type="button"
+                  <Link
+                    href="/media"
                     className="w-full py-2.5 px-4 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600/20 hover:bg-purple-600 border border-purple-500/40 hover:border-purple-500 transition-all duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-purple-600/20"
                   >
                     <svg className="w-4 h-4 text-purple-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     <span>Watch Live</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             );

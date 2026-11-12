@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import heroPortalBg from "../../../../public/assets/hero-portal.png";
 
 export default async function Hero() {
   const session = await getServerSession(authOptions);
@@ -14,7 +13,7 @@ export default async function Hero() {
       {/* Atmospheric Background Art & Portal Image */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         <Image
-          src={heroPortalBg}
+          src="/assets/hero-portal.png"
           alt="Esports Portal Arena"
           priority
           fill

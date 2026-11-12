@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { createTournament } from "@/app/actions/adminActions";
 
 export default function CreateTournamentForm() {
   const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setFeedback(null);
 
     const form = e.target;
     const formData = new FormData(form);
@@ -19,10 +18,10 @@ export default function CreateTournamentForm() {
     setLoading(false);
 
     if (res.success) {
-      setFeedback({ success: true, message: res.message });
+      toast.success(res.message);
       form.reset();
     } else {
-      setFeedback({ success: false, message: res.error });
+      toast.error(res.error || "Failed to create tournament.");
     }
   };
 
@@ -37,21 +36,8 @@ export default function CreateTournamentForm() {
         </p>
       </div>
 
-      {feedback && (
-        <div
-          className={`p-4 rounded-xl text-xs font-semibold mb-6 border ${
-            feedback.success
-              ? "bg-green-500/10 border-green-500/30 text-green-400"
-              : "bg-red-500/10 border-red-500/30 text-red-400"
-          }`}
-        >
-          {feedback.message}
-        </div>
-      )}
-
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Title */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Tournament Title
@@ -65,7 +51,6 @@ export default function CreateTournamentForm() {
             />
           </div>
 
-          {/* Game Title */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Game Title
@@ -81,7 +66,6 @@ export default function CreateTournamentForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Start Date */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Start Date
@@ -94,7 +78,6 @@ export default function CreateTournamentForm() {
             />
           </div>
 
-          {/* End Date */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               End Date
@@ -106,7 +89,6 @@ export default function CreateTournamentForm() {
             />
           </div>
 
-          {/* Format */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Bracket Format
@@ -134,4 +116,3 @@ export default function CreateTournamentForm() {
     </div>
   );
 }
-

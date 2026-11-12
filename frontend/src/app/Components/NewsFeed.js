@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import prisma from "@/lib/prisma";
 
 export default async function NewsFeed() {
@@ -82,9 +83,12 @@ export default async function NewsFeed() {
 
                 <div className="mt-6 pt-4 border-t border-zinc-800/60 flex items-center justify-between text-xs">
                   <span className="text-zinc-500">Official Announcement</span>
-                  <span className="text-purple-400 font-bold hover:text-purple-300 cursor-pointer">
+                  <Link
+                    href="/about"
+                    className="text-purple-400 font-bold hover:text-purple-300 transition-colors"
+                  >
                     Read More →
-                  </span>
+                  </Link>
                 </div>
               </article>
             );

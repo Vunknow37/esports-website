@@ -3,30 +3,33 @@
 import React, { useState } from "react";
 import { updateGamerTag } from "@/app/actions/adminActions";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function EditProfileModal({ currentTag }) {
   const [isOpen, setIsOpen] = useState(false);
   const [gamerTag, setGamerTag] = useState(currentTag || "");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null);
   const { update } = useSession();
 
   const handleSave = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setStatus(null);
+    if (!gamerTag || gamerTag.trim().length < 2) {
+      toast.error("Gamer tag must be at least 2 characters.");
+      return;
+    }
 
+    setLoading(true);
     const res = await updateGamerTag(gamerTag);
     setLoading(false);
 
     if (res.success) {
-      setStatus({ success: true, message: res.message });
+      toast.success(res.message);
       if (update) {
         await update({ gamerTag: res.gamerTag });
       }
-      setTimeout(() => setIsOpen(false), 900);
+      setIsOpen(false);
     } else {
-      setStatus({ success: false, message: res.error });
+      toast.error(res.error || "Failed to update gamer tag.");
     }
   };
 
@@ -49,18 +52,6 @@ export default function EditProfileModal({ currentTag }) {
             <p className="text-xs text-zinc-400 mb-5">
               Your gamer tag will be visible on tournament match sheets and rosters.
             </p>
-
-            {status && (
-              <div
-                className={`p-3 rounded-lg text-xs font-semibold mb-4 border ${
-                  status.success
-                    ? "bg-green-500/10 border-green-500/30 text-green-400"
-                    : "bg-red-500/10 border-red-500/30 text-red-400"
-                }`}
-              >
-                {status.message}
-              </div>
-            )}
 
             <form onSubmit={handleSave} className="space-y-4">
               <div>
@@ -103,4 +94,3 @@ export default function EditProfileModal({ currentTag }) {
     </>
   );
 }
-
