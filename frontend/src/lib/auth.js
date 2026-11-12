@@ -51,3 +51,4 @@ export const authOptions = {
 
 export const options = authOptions;
 export default authOptions;
+
