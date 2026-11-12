@@ -1,0 +1,23 @@
+.playtime  {
+
+
+font-weight: 900;
+
+background: linear-gradient(90.02deg, #dc92ff, #6f41c5);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+text-align: left;
+align-items: center;
+
+
+
+
+}
+
+.HeroBg{
+
+    background: rgb(16,16,16);
+background: linear-gradient(180deg, rgba(16,16,16,1) 17%, rgba(32,32,32,1) 65%, rgba(16,16,16,1) 100%);
+
+}

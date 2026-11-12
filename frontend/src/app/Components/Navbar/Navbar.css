@@ -1,0 +1,22 @@
+.navlinkStyle{
+    transition : filter .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    cursor: pointer;
+border: none;
+padding: 0;
+background-color: transparent;
+position: relative;
+font-size: 0.8rem;
+line-height: 100%;
+text-transform: uppercase;
+font-weight: 900;
+color: #fff;
+text-align: left;
+display: inline-block;
+filter: drop-shadow(0 0 0rem white)
+
+}
+
+.navlinkStyle:hover {
+    transition : filter .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    filter: drop-shadow(0 0 0.15rem white)
+}
