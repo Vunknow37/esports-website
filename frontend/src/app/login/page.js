@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
+import heroPortalBg from "../../../../public/assets/hero-portal.png";
 
 export default function LoginPage() {
   const [loadingProvider, setLoadingProvider] = useState(null);
@@ -18,7 +20,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-12">
+    <div className="relative min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Background artwork */}
+      <div className="absolute inset-0 pointer-events-none select-none -z-10">
+        <Image
+          src={heroPortalBg}
+          alt="Arena Backdrop"
+          fill
+          priority
+          className="object-cover opacity-25 scale-105 blur-sm"
+        />
+        <div className="absolute inset-0 bg-zinc-950/80" />
+      </div>
+
       {/* Subtle gaming background glowing orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#ec3661]/10 rounded-full blur-3xl pointer-events-none" />
