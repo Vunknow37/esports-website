@@ -129,3 +129,4 @@ export async function updateGamerTag(gamerTag) {
     return { success: false, error: "Gamer tag is already taken or invalid." };
   }
 }
+
