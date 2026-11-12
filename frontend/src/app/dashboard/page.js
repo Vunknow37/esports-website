@@ -2,14 +2,14 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import Navbar from "@/app/Components/Navbar/Navbar";
 import Footer from "@/app/Components/Footer";
 import EditProfileModal from "./EditProfileModal";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
     redirect("/login?callbackUrl=/dashboard");

@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { authOptions } from "@/lib/auth";
 
 export default async function Hero() {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   const user = session?.user;
 
   return (

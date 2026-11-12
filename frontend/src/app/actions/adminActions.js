@@ -2,14 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 /**
  * Security helper: Ensures current session belongs to an ADMIN.
  */
 async function verifyAdminSession() {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   if (!session || !session.user || session.user.role !== "ADMIN") {
     throw new Error("Access Denied: Administrator role required.");
   }
@@ -100,7 +100,7 @@ export async function updateMatchScore(matchId, score) {
  */
 export async function updateGamerTag(gamerTag) {
   try {
-    const session = await getServerSession(options);
+    const session = await getServerSession(authOptions);
     if (!session || !session.user || !session.user.email) {
       return { success: false, error: "Authentication required." };
     }

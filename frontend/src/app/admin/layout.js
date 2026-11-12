@@ -2,7 +2,7 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { authOptions } from "@/lib/auth";
 
 export const metadata = {
   title: "Admin Command Center | IITR Esports",
@@ -18,7 +18,7 @@ const NAV_LINKS = [
 ];
 
 export default async function AdminLayout({ children }) {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
 
   // Strict Server Component Admin Role Verification
   if (!session || !session.user || session.user.role !== "ADMIN") {
