@@ -50,18 +50,18 @@ export default function ContactPage() {
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-12 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12">
           {/* Left Column: Info */}
-          <div className="md:col-span-2 space-y-8">
+          <div className="md:col-span-2 space-y-6 sm:space-y-8">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4">
                 Support & Inquiries
               </div>
-              <h1 className="text-3xl md:text-5xl font-black font-lexend tracking-tight text-white mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-lexend tracking-tight text-white mb-4">
                 GET IN TOUCH
               </h1>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
                 Have questions about tournament registration, inter-college scrims, or corporate sponsorship packages? Send us a dispatch.
               </p>
             </div>
@@ -99,7 +99,7 @@ export default function ContactPage() {
 
           {/* Right Column: Form */}
           <div className="md:col-span-3">
-            <div className="rounded-3xl bg-zinc-900/70 border border-zinc-800 p-8 md:p-10 shadow-2xl backdrop-blur-xl">
+            <div className="rounded-2xl sm:rounded-3xl bg-zinc-900/70 border border-zinc-800 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-xl">
               {/* Notification Banner */}
               {submissionStatus && (
                 <div
@@ -114,7 +114,7 @@ export default function ContactPage() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5" noValidate>
                 {/* Name */}
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
@@ -124,7 +124,7 @@ export default function ContactPage() {
                     type="text"
                     {...register("name")}
                     placeholder="e.g. Alex Mercer"
-                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all ${
+                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all min-h-[44px] ${
                       errors.name
                         ? "border-red-500 focus:border-red-500"
                         : "border-zinc-700/80 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
@@ -146,7 +146,7 @@ export default function ContactPage() {
                     type="email"
                     {...register("email")}
                     placeholder="alex@domain.com"
-                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all ${
+                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all min-h-[44px] ${
                       errors.email
                         ? "border-red-500 focus:border-red-500"
                         : "border-zinc-700/80 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
@@ -168,7 +168,7 @@ export default function ContactPage() {
                     type="text"
                     {...register("subject")}
                     placeholder="e.g. Scrim match inquiry / Partnership"
-                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all ${
+                    className={`w-full px-4 py-3 rounded-xl bg-zinc-800/80 border text-white placeholder-zinc-500 text-sm focus:outline-none transition-all min-h-[44px] ${
                       errors.subject
                         ? "border-red-500 focus:border-red-500"
                         : "border-zinc-700/80 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
@@ -208,7 +208,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 active:scale-[0.99] transition-all shadow-lg shadow-purple-600/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-3.5 sm:py-4 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 active:scale-[0.99] transition-all shadow-lg shadow-purple-600/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     {isSubmitting ? (
                       <>

@@ -46,10 +46,10 @@ export default async function AdminOverviewPage() {
   ];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 sm:space-y-10">
       {/* Overview Header */}
       <div>
-        <h1 className="text-3xl font-black font-lexend tracking-tight text-white">
+        <h1 className="text-2xl sm:text-3xl font-black font-lexend tracking-tight text-white">
           ADMIN OVERVIEW & TELEMETRY
         </h1>
         <p className="text-zinc-400 text-xs mt-1">
@@ -58,21 +58,21 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* 1. Quick Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {statCards.map((card) => (
           <div
             key={card.label}
-            className={`p-6 rounded-2xl bg-gradient-to-br ${card.color} to-zinc-900/60 border border-zinc-800 flex items-center justify-between shadow-lg`}
+            className={`p-5 sm:p-6 rounded-2xl bg-gradient-to-br ${card.color} to-zinc-900/60 border border-zinc-800 flex items-center justify-between shadow-lg`}
           >
             <div>
-              <span className="text-xs uppercase font-bold tracking-wider text-zinc-400 block mb-1">
+              <span className="text-[11px] sm:text-xs uppercase font-bold tracking-wider text-zinc-400 block mb-1">
                 {card.label}
               </span>
-              <span className="text-3xl font-black font-lexend text-white">
+              <span className="text-2xl sm:text-3xl font-black font-lexend text-white">
                 {card.value}
               </span>
             </div>
-            <span className="text-3xl">{card.icon}</span>
+            <span className="text-2xl sm:text-3xl">{card.icon}</span>
           </div>
         ))}
       </div>
@@ -81,9 +81,9 @@ export default async function AdminOverviewPage() {
       <CreateTournamentForm />
 
       {/* 3. Recent Tournaments Table */}
-      <div className="rounded-3xl bg-zinc-900/70 border border-zinc-800 p-8 shadow-xl">
+      <div className="rounded-2xl sm:rounded-3xl bg-zinc-900/70 border border-zinc-800 p-5 sm:p-6 md:p-8 shadow-xl">
         <div className="flex items-center justify-between mb-6 pb-2 border-b border-zinc-800">
-          <h3 className="text-xl font-black font-lexend text-white">
+          <h3 className="text-lg sm:text-xl font-black font-lexend text-white">
             RECENT TOURNAMENTS
           </h3>
           <span className="text-xs text-zinc-400">Database Records</span>
@@ -92,25 +92,25 @@ export default async function AdminOverviewPage() {
         {recentTournaments.length === 0 ? (
           <p className="text-xs text-zinc-500 italic">No tournaments in database yet.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+          <div className="w-full overflow-x-auto">
+            <table className="w-full text-left text-xs min-w-[520px]">
               <thead>
                 <tr className="border-b border-zinc-800 text-zinc-400 uppercase tracking-wider font-semibold">
-                  <th className="pb-3">Title</th>
-                  <th className="pb-3">Game</th>
-                  <th className="pb-3">Format</th>
-                  <th className="pb-3">Status</th>
+                  <th className="pb-3 pr-4">Title</th>
+                  <th className="pb-3 pr-4">Game</th>
+                  <th className="pb-3 pr-4">Format</th>
+                  <th className="pb-3 pr-4">Status</th>
                   <th className="pb-3">Matches</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/60 font-medium">
                 {recentTournaments.map((t) => (
                   <tr key={t.id} className="hover:bg-zinc-800/40 transition-colors">
-                    <td className="py-3 font-bold text-white">{t.title}</td>
-                    <td className="py-3 text-purple-400">{t.gameTitle}</td>
-                    <td className="py-3 text-zinc-300">{t.format}</td>
-                    <td className="py-3">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300">
+                    <td className="py-3 pr-4 font-bold text-white whitespace-nowrap">{t.title}</td>
+                    <td className="py-3 pr-4 text-purple-400 whitespace-nowrap">{t.gameTitle}</td>
+                    <td className="py-3 pr-4 text-zinc-300 whitespace-nowrap">{t.format}</td>
+                    <td className="py-3 pr-4">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 whitespace-nowrap">
                         {t.status}
                       </span>
                     </td>

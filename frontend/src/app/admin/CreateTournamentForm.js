@@ -26,9 +26,9 @@ export default function CreateTournamentForm() {
   };
 
   return (
-    <div className="rounded-3xl bg-zinc-900/70 border border-zinc-800 p-8 shadow-xl">
+    <div className="rounded-2xl sm:rounded-3xl bg-zinc-900/70 border border-zinc-800 p-5 sm:p-8 shadow-xl">
       <div className="mb-6">
-        <h3 className="text-xl font-black font-lexend text-white">
+        <h3 className="text-lg sm:text-xl font-black font-lexend text-white">
           CREATE NEW TOURNAMENT
         </h3>
         <p className="text-xs text-zinc-400 mt-1">
@@ -47,7 +47,7 @@ export default function CreateTournamentForm() {
               name="title"
               required
               placeholder="e.g. Winter Invitational 2026"
-              className="w-full px-4 py-2.5 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all min-h-[44px]"
             />
           </div>
 
@@ -60,12 +60,12 @@ export default function CreateTournamentForm() {
               name="gameTitle"
               required
               placeholder="e.g. Valorant, BGMI, CS2"
-              className="w-full px-4 py-2.5 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all min-h-[44px]"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Start Date
@@ -74,7 +74,7 @@ export default function CreateTournamentForm() {
               type="date"
               name="startDate"
               required
-              className="w-full px-4 py-2.5 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white text-sm focus:outline-none focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white text-sm focus:outline-none focus:border-purple-500 transition-all min-h-[44px]"
             />
           </div>
 
@@ -85,11 +85,11 @@ export default function CreateTournamentForm() {
             <input
               type="date"
               name="endDate"
-              className="w-full px-4 py-2.5 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white text-sm focus:outline-none focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white text-sm focus:outline-none focus:border-purple-500 transition-all min-h-[44px]"
             />
           </div>
 
-          <div>
+          <div className="sm:col-span-2 md:col-span-1">
             <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Bracket Format
             </label>
@@ -98,7 +98,7 @@ export default function CreateTournamentForm() {
               name="format"
               required
               placeholder="e.g. Double Elimination (5v5)"
-              className="w-full px-4 py-2.5 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 transition-all min-h-[44px]"
             />
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function CreateTournamentForm() {
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 active:scale-[0.99] transition-all shadow-lg shadow-purple-600/30 disabled:opacity-50"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 active:scale-[0.99] transition-all shadow-lg shadow-purple-600/30 disabled:opacity-50 min-h-[44px] flex items-center justify-center"
           >
             {loading ? "Creating..." : "Publish Tournament"}
           </button>

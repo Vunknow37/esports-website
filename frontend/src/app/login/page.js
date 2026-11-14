@@ -24,28 +24,28 @@ export default function LoginPage() {
       <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#ec3661]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-md p-8 md:p-10 rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl">
+      <div className="relative z-10 w-full max-w-md p-6 sm:p-8 md:p-10 rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 sm:mb-8">
           <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
             Player Access
           </span>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white font-lexend">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white font-lexend">
             WELCOME BACK
           </h1>
-          <p className="mt-2 text-sm text-zinc-400">
+          <p className="mt-2 text-xs sm:text-sm text-zinc-400">
             Sign in to access your teams, scrims, and tournament brackets.
           </p>
         </div>
 
         {/* OAuth Buttons */}
-        <div className="space-y-4">
+        <div className="space-y-3.5 sm:space-y-4">
           {/* Discord Button */}
           <button
             type="button"
             disabled={loadingProvider !== null}
             onClick={() => handleSignIn("discord")}
-            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl font-medium text-white bg-[#5865F2] hover:bg-[#4752c4] active:scale-[0.99] transition-all duration-200 shadow-lg shadow-[#5865f2]/20 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl font-medium text-white bg-[#5865F2] hover:bg-[#4752c4] active:scale-[0.99] transition-all duration-200 shadow-lg shadow-[#5865f2]/20 disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px]"
           >
             <svg
               className="w-5 h-5 fill-current"
@@ -66,9 +66,9 @@ export default function LoginPage() {
             type="button"
             disabled={loadingProvider !== null}
             onClick={() => handleSignIn("google")}
-            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl font-medium text-zinc-100 bg-zinc-800/80 hover:bg-zinc-800 active:scale-[0.99] border border-zinc-700/60 transition-all duration-200 shadow-md hover:border-zinc-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl font-medium text-zinc-100 bg-zinc-800/80 hover:bg-zinc-800 active:scale-[0.99] border border-zinc-700/60 transition-all duration-200 shadow-md hover:border-zinc-600 disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px]"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
               <path
                 fill="#EA4335"
                 d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.8C6.5 7.1 9 5 12 5z"
@@ -95,14 +95,14 @@ export default function LoginPage() {
         </div>
 
         {/* Footer info */}
-        <div className="mt-8 pt-6 border-t border-zinc-800/80 text-center">
+        <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-zinc-800/80 text-center">
           <p className="text-xs text-zinc-500">
             By signing in, you agree to our Tournament Rules and Code of Conduct.
           </p>
           <div className="mt-4">
             <Link
               href="/"
-              className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+              className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center min-h-[44px] py-2"
             >
               ← Back to Home
             </Link>

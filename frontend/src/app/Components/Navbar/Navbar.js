@@ -23,48 +23,56 @@ export default function Navbar() {
   const isAdmin = user?.role === "ADMIN";
 
   return (
-    <nav className="bg-[#101010]/95 backdrop-blur-md justify-between md:pl-20 md:pr-10 p-5 md:py-6 flex flex-col md:flex-row font-lexend align-middle w-full m-auto border-b border-zinc-800/80 sticky top-0 z-40">
+    <nav className="bg-[#101010]/95 backdrop-blur-md justify-between px-4 sm:px-6 md:pl-20 md:pr-10 py-4 md:py-6 flex flex-col md:flex-row font-lexend align-middle w-full m-auto border-b border-zinc-800/80 sticky top-0 z-40">
       {/* Brand & Mobile Hamburger */}
-      <div className="flex flex-row justify-between items-center">
-        <Image
-          src={menu}
-          alt="menu toggle"
-          className={`w-7 h-7 invert md:hidden cursor-pointer transition-transform duration-300 ${
-            open ? "rotate-90" : "rotate-0"
-          }`}
+      <div className="flex flex-row justify-between items-center w-full md:w-auto">
+        <button
+          type="button"
+          aria-label="Toggle navigation menu"
           onClick={() => setOpen(!open)}
-        />
+          className="p-2 -ml-2 text-zinc-300 md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg hover:bg-zinc-800/60 transition-colors"
+        >
+          <Image
+            src={menu}
+            alt="menu toggle"
+            className={`w-6 h-6 invert transition-transform duration-300 ${
+              open ? "rotate-90" : "rotate-0"
+            }`}
+          />
+        </button>
 
         <Link href="/" className="sm:mx-auto md:m-0 flex items-center gap-3">
-          <Image src={logo} alt="IITR Esports Logo" priority className="h-9 w-auto" />
+          <Image src={logo} alt="IITR Esports Logo" priority className="h-8 sm:h-9 w-auto" />
         </Link>
       </div>
 
       {/* Mobile Drawer */}
       <div
-        className={`md:hidden flex flex-col overflow-hidden transition-all duration-300 ${
-          open ? "max-h-96 pt-6 pb-2" : "max-h-0"
+        className={`md:hidden flex flex-col overflow-hidden transition-all duration-300 ease-in-out ${
+          open ? "max-h-[32rem] pt-5 pb-3 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
-        {NAV_LINKS.map((navLink) => (
-          <Link
-            key={navLink.link}
-            href={navLink.link}
-            onClick={() => setOpen(false)}
-            className="my-2.5 ml-4 tracking-widest text-sm text-zinc-300 hover:text-white transition-colors"
-          >
-            {navLink.title}
-          </Link>
-        ))}
+        <div className="flex flex-col space-y-1">
+          {NAV_LINKS.map((navLink) => (
+            <Link
+              key={navLink.link}
+              href={navLink.link}
+              onClick={() => setOpen(false)}
+              className="px-3 py-3 rounded-xl tracking-widest text-xs font-bold uppercase text-zinc-300 hover:text-white hover:bg-zinc-800/60 min-h-[44px] flex items-center transition-colors"
+            >
+              {navLink.title}
+            </Link>
+          ))}
+        </div>
 
-        <div className="pt-4 mt-2 border-t border-zinc-800 flex flex-col gap-2.5 ml-4">
+        <div className="pt-4 mt-3 border-t border-zinc-800/80 flex flex-col gap-2.5">
           {status === "authenticated" ? (
             <>
               {isAdmin && (
                 <Link
                   href="/admin"
                   onClick={() => setOpen(false)}
-                  className="text-xs font-bold uppercase tracking-wider text-amber-400 py-1"
+                  className="px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-amber-400 hover:bg-amber-500/10 min-h-[44px] flex items-center transition-colors"
                 >
                   ⚙ Admin Console
                 </Link>
@@ -72,7 +80,7 @@ export default function Navbar() {
               <Link
                 href="/dashboard"
                 onClick={() => setOpen(false)}
-                className="text-xs font-bold uppercase tracking-wider text-purple-400 py-1"
+                className="px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-purple-400 hover:bg-purple-500/10 min-h-[44px] flex items-center transition-colors"
               >
                 👤 @{user?.gamerTag || user?.name || "Player"} (Dashboard)
               </Link>
@@ -84,7 +92,7 @@ export default function Navbar() {
             <Link
               href="/login"
               onClick={() => setOpen(false)}
-              className="bg-purple-600 font-lexend font-black text-center text-white py-2.5 px-6 rounded-lg text-xs uppercase tracking-wider shadow-lg shadow-purple-600/30"
+              className="bg-purple-600 font-lexend font-black text-center text-white py-3 px-6 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-purple-600/30 min-h-[44px] flex items-center justify-center transition-all active:scale-[0.98]"
             >
               LOGIN
             </Link>

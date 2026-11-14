@@ -31,24 +31,24 @@ export default async function EventsPage() {
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-12 md:py-16">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         {/* Page Header */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-3">
             Tournaments & Qualifiers
           </div>
-          <h1 className="text-4xl md:text-5xl font-black font-lexend tracking-tight text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-lexend tracking-tight text-white">
             COMPETITIVE EVENTS
           </h1>
-          <p className="text-zinc-400 mt-2 text-sm md:text-base max-w-2xl">
+          <p className="text-zinc-400 mt-2 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed">
             Explore active collegiate tournaments, register your rosters, or review past championship results.
           </p>
         </div>
 
         {/* Section 1: Upcoming & Ongoing */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-8 pb-3 border-b border-zinc-800">
-            <h2 className="text-2xl font-black font-lexend text-white tracking-wide">
+        <section className="mb-12 sm:mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 sm:mb-8 pb-3 border-b border-zinc-800">
+            <h2 className="text-xl sm:text-2xl font-black font-lexend text-white tracking-wide">
               UPCOMING & ONGOING TOURNAMENTS
             </h2>
             <span className="text-xs text-purple-400 font-bold uppercase tracking-wider">
@@ -57,8 +57,8 @@ export default async function EventsPage() {
           </div>
 
           {activeTournaments.length === 0 ? (
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-12 text-center">
-              <p className="text-sm text-zinc-400">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-8 sm:p-12 text-center">
+              <p className="text-xs sm:text-sm text-zinc-400">
                 No active tournaments currently open for registration. Stay tuned for the upcoming season!
               </p>
             </div>
@@ -73,8 +73,8 @@ export default async function EventsPage() {
 
         {/* Section 2: Completed Tournaments */}
         <section>
-          <div className="flex items-center justify-between mb-8 pb-3 border-b border-zinc-800">
-            <h2 className="text-2xl font-black font-lexend text-white tracking-wide">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 sm:mb-8 pb-3 border-b border-zinc-800">
+            <h2 className="text-xl sm:text-2xl font-black font-lexend text-white tracking-wide">
               COMPLETED CHAMPIONSHIPS
             </h2>
             <span className="text-xs text-zinc-500 font-bold uppercase tracking-wider">
@@ -83,8 +83,8 @@ export default async function EventsPage() {
           </div>
 
           {completedTournaments.length === 0 ? (
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-10 text-center">
-              <p className="text-sm text-zinc-500">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-8 sm:p-10 text-center">
+              <p className="text-xs sm:text-sm text-zinc-500">
                 Past tournament archives will appear here once events conclude.
               </p>
             </div>
@@ -120,7 +120,7 @@ function TournamentCard({ tournament }) {
   return (
     <Link
       href={`/events/${tournament.id}`}
-      className="group rounded-2xl bg-zinc-900/60 border border-zinc-800 p-6 flex flex-col justify-between hover:border-purple-500/50 hover:bg-zinc-900/90 transition-all duration-300 shadow-xl"
+      className="group rounded-2xl bg-zinc-900/60 border border-zinc-800 p-5 sm:p-6 flex flex-col justify-between hover:border-purple-500/50 hover:bg-zinc-900/90 transition-all duration-300 shadow-xl"
     >
       <div>
         <div className="flex items-center justify-between mb-4">
@@ -141,7 +141,7 @@ function TournamentCard({ tournament }) {
           </span>
         </div>
 
-        <h3 className="text-xl font-bold font-lexend text-white group-hover:text-purple-300 transition-colors mb-2">
+        <h3 className="text-lg sm:text-xl font-bold font-lexend text-white group-hover:text-purple-300 transition-colors mb-2">
           {tournament.title}
         </h3>
 
@@ -151,8 +151,8 @@ function TournamentCard({ tournament }) {
       </div>
 
       <div className="pt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-400">
-        <span>{startDate} — {endDate}</span>
-        <span className="font-bold text-purple-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+        <span className="truncate mr-2">{startDate} — {endDate}</span>
+        <span className="font-bold text-purple-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 shrink-0">
           View Brackets →
         </span>
       </div>

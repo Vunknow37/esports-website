@@ -18,14 +18,14 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
 
   if (authStatus === "unauthenticated" || !session) {
     return (
-      <div className="flex flex-col sm:flex-row items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
         <Link
           href={`/login?callbackUrl=/events/${tournamentId}`}
-          className="px-6 py-3 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 transition-all shadow-lg shadow-purple-600/30"
+          className="px-6 py-3.5 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 transition-all shadow-lg shadow-purple-600/30 text-center min-h-[44px] flex items-center justify-center"
         >
           Sign in to Register Team
         </Link>
-        <span className="text-xs text-zinc-500">Requires a verified player account</span>
+        <span className="text-xs text-zinc-500 text-center sm:text-left">Requires a verified player account</span>
       </div>
     );
   }
@@ -67,7 +67,7 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="px-8 py-3.5 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-[#ec3661] hover:bg-[#d62851] active:scale-95 transition-all shadow-lg shadow-[#ec3661]/30 flex items-center gap-2"
+        className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-[#ec3661] hover:bg-[#d62851] active:scale-95 transition-all shadow-lg shadow-[#ec3661]/30 flex items-center justify-center gap-2 min-h-[44px]"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -77,8 +77,8 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 p-6 md:p-8 shadow-2xl relative">
-            <h3 className="text-xl font-black text-white font-lexend mb-2">
+          <div className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 p-5 sm:p-8 shadow-2xl relative">
+            <h3 className="text-lg sm:text-xl font-black text-white font-lexend mb-2">
               REGISTER YOUR ROSTER
             </h3>
             <p className="text-xs text-zinc-400 mb-6">
@@ -97,7 +97,7 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
                   placeholder="e.g. Phoenix Syndicate"
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all min-h-[44px]"
                 />
               </div>
 
@@ -105,14 +105,14 @@ export default function RegisterTeamButton({ tournamentId, tournamentTitle, stat
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white transition-colors"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white transition-colors min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 transition-all disabled:opacity-50"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-500 transition-all disabled:opacity-50 min-h-[44px]"
                 >
                   {loading ? "Registering..." : "Confirm Entry"}
                 </button>

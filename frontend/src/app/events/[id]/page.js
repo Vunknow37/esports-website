@@ -61,24 +61,24 @@ export default async function TournamentDetailPage({ params }) {
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-12 md:py-16">
+      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         {/* Breadcrumb */}
         <div className="mb-6">
           <Link
             href="/events"
-            className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
+            className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1 py-1"
           >
             ← Back to All Tournaments
           </Link>
         </div>
 
         {/* Hero Banner Card */}
-        <div className="relative rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-8 md:p-12 mb-12 shadow-2xl overflow-hidden">
+        <div className="relative rounded-2xl sm:rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-5 sm:p-8 md:p-12 mb-8 sm:mb-12 shadow-2xl overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8">
             <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                 <span className="px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/30">
                   {tournament.gameTitle}
                 </span>
@@ -96,22 +96,22 @@ export default async function TournamentDetailPage({ params }) {
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-5xl font-black font-lexend tracking-tight text-white">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl font-black font-lexend tracking-tight text-white">
                 {tournament.title}
               </h1>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-4 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 pt-4 text-xs">
                 <div>
                   <span className="block text-zinc-500 uppercase tracking-wider font-semibold mb-1">
                     Format
                   </span>
-                  <span className="text-white font-bold text-sm">{tournament.format}</span>
+                  <span className="text-white font-bold text-xs sm:text-sm">{tournament.format}</span>
                 </div>
                 <div>
                   <span className="block text-zinc-500 uppercase tracking-wider font-semibold mb-1">
                     Timeline
                   </span>
-                  <span className="text-white font-bold text-sm">
+                  <span className="text-white font-bold text-xs sm:text-sm">
                     {startDate} — {endDate}
                   </span>
                 </div>
@@ -119,7 +119,7 @@ export default async function TournamentDetailPage({ params }) {
                   <span className="block text-zinc-500 uppercase tracking-wider font-semibold mb-1">
                     Bracket Size
                   </span>
-                  <span className="text-white font-bold text-sm">
+                  <span className="text-white font-bold text-xs sm:text-sm">
                     {tournament.matches.length > 0
                       ? `${tournament.matches.length * 2} Teams`
                       : "Open Registration"}
@@ -129,7 +129,7 @@ export default async function TournamentDetailPage({ params }) {
             </div>
 
             {/* Task 1: Client Component Button for registration */}
-            <div className="shrink-0">
+            <div className="shrink-0 w-full md:w-auto">
               <RegisterTeamButton
                 tournamentId={tournament.id}
                 tournamentTitle={tournament.title}
@@ -141,8 +141,8 @@ export default async function TournamentDetailPage({ params }) {
 
         {/* Tournament Bracket / Matches */}
         <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-black font-lexend text-white tracking-wide">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-2 border-b border-zinc-800">
+            <h2 className="text-xl sm:text-2xl font-black font-lexend text-white tracking-wide">
               TOURNAMENT FIXTURES & MATCHES
             </h2>
             <span className="text-xs text-zinc-500 font-medium">
@@ -151,25 +151,25 @@ export default async function TournamentDetailPage({ params }) {
           </div>
 
           {tournament.matches.length === 0 ? (
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-10 text-center">
-              <p className="text-sm text-zinc-400">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-8 sm:p-10 text-center">
+              <p className="text-xs sm:text-sm text-zinc-400">
                 Fixtures will be auto-generated and drawn once team registrations close.
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {tournament.matches.map((match, idx) => (
                 <div
                   key={match.id}
-                  className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 hover:border-zinc-700 transition-all"
+                  className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:border-zinc-700 transition-all"
                 >
                   <span className="text-xs font-mono text-zinc-500 uppercase">
                     Match #{idx + 1}
                   </span>
 
-                  <div className="flex items-center gap-6 font-lexend font-bold text-sm">
+                  <div className="flex items-center gap-4 sm:gap-6 font-lexend font-bold text-xs sm:text-sm">
                     <span className="text-white">{match.teamA?.name || "TBD"}</span>
-                    <span className="px-3 py-1 rounded bg-black/60 border border-zinc-800 font-mono text-xs text-[#ec3661]">
+                    <span className="px-2.5 sm:px-3 py-1 rounded bg-black/60 border border-zinc-800 font-mono text-xs text-[#ec3661]">
                       {match.score || "VS"}
                     </span>
                     <span className="text-white">{match.teamB?.name || "TBD"}</span>

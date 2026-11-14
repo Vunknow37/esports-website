@@ -26,25 +26,25 @@ export default async function MatchesSpotlight() {
   }
 
   return (
-    <section className="py-20 px-6 md:px-16 max-w-7xl mx-auto w-full">
+    <section className="py-12 md:py-20 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto w-full">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold uppercase tracking-wider mb-3">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
             Live & Scheduled
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white font-lexend tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white font-lexend tracking-tight">
             MATCHES SPOTLIGHT
           </h2>
-          <p className="text-zinc-400 mt-2 text-sm max-w-xl">
+          <p className="text-zinc-400 mt-2 text-xs sm:text-sm max-w-xl">
             Catch the most thrilling clashes, tournament brackets, and live showdowns.
           </p>
         </div>
 
         <Link
           href="/events"
-          className="mt-4 md:mt-0 text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1"
+          className="mt-4 md:mt-0 text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1 py-1"
         >
           <span>All Match Schedules</span>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,22 +55,22 @@ export default async function MatchesSpotlight() {
 
       {/* Matches Grid or Empty State */}
       {matches.length === 0 ? (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-12 text-center backdrop-blur-sm">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-8 sm:p-12 text-center backdrop-blur-sm">
           <div className="mx-auto w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-4">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-bold text-white font-lexend">
+          <h3 className="text-base sm:text-lg font-bold text-white font-lexend">
             No upcoming matches scheduled at the moment
           </h3>
-          <p className="text-sm text-zinc-400 mt-1 max-w-md mx-auto">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-md mx-auto">
             Our next tournament brackets are being configured. Check back shortly or register your team!
           </p>
           <div className="mt-6">
             <Link
               href="/events"
-              className="inline-block px-5 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-bold uppercase tracking-wider text-white transition-all"
+              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold uppercase tracking-wider text-white transition-all min-h-[44px]"
             >
               Browse Tournaments
             </Link>
@@ -85,10 +85,10 @@ export default async function MatchesSpotlight() {
             return (
               <div
                 key={match.id}
-                className="group relative rounded-2xl bg-zinc-900/60 border border-zinc-800 p-6 flex flex-col justify-between hover:border-purple-500/50 hover:bg-zinc-900/90 transition-all duration-300 shadow-xl"
+                className="group relative rounded-2xl bg-zinc-900/60 border border-zinc-800 p-5 sm:p-6 flex flex-col justify-between hover:border-purple-500/50 hover:bg-zinc-900/90 transition-all duration-300 shadow-xl"
               >
                 {/* Card Top: Game & Status Tag */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-5 sm:mb-6">
                   <span className="px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-zinc-800 text-purple-300 border border-zinc-700">
                     {match.tournament?.gameTitle || "Esports"}
                   </span>
@@ -112,35 +112,35 @@ export default async function MatchesSpotlight() {
 
                 {/* Card Center: Teams Duel */}
                 <div className="py-4 my-auto">
-                  <div className="flex items-center justify-between text-center gap-4">
+                  <div className="flex items-center justify-between text-center gap-3 sm:gap-4">
                     {/* Team A */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br from-purple-600/30 to-zinc-800 border border-purple-500/30 flex items-center justify-center font-bold font-lexend text-white text-lg">
                         {match.teamA?.name?.slice(0, 2).toUpperCase() || "TA"}
                       </div>
-                      <p className="font-bold text-white text-sm truncate">
+                      <p className="font-bold text-white text-xs sm:text-sm truncate">
                         {match.teamA?.name || "Team A"}
                       </p>
                     </div>
 
                     {/* VS & Score */}
-                    <div className="px-2 flex flex-col items-center">
+                    <div className="px-1 sm:px-2 flex flex-col items-center shrink-0">
                       <span className="font-lexend font-black text-xs text-zinc-500 tracking-widest uppercase">
                         VS
                       </span>
                       {match.score ? (
-                        <span className="mt-1 font-mono font-bold text-sm text-[#ec3661] bg-black/40 px-2 py-0.5 rounded border border-zinc-800">
+                        <span className="mt-1 font-mono font-bold text-xs sm:text-sm text-[#ec3661] bg-black/40 px-2 py-0.5 rounded border border-zinc-800">
                           {match.score}
                         </span>
                       ) : null}
                     </div>
 
                     {/* Team B */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br from-[#ec3661]/30 to-zinc-800 border border-[#ec3661]/30 flex items-center justify-center font-bold font-lexend text-white text-lg">
                         {match.teamB?.name?.slice(0, 2).toUpperCase() || "TB"}
                       </div>
-                      <p className="font-bold text-white text-sm truncate">
+                      <p className="font-bold text-white text-xs sm:text-sm truncate">
                         {match.teamB?.name || "Team B"}
                       </p>
                     </div>
@@ -152,10 +152,10 @@ export default async function MatchesSpotlight() {
                 </div>
 
                 {/* Card Bottom: Watch Live CTA */}
-                <div className="mt-6 pt-4 border-t border-zinc-800/80">
+                <div className="mt-5 sm:mt-6 pt-4 border-t border-zinc-800/80">
                   <Link
                     href="/media"
-                    className="w-full py-2.5 px-4 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600/20 hover:bg-purple-600 border border-purple-500/40 hover:border-purple-500 transition-all duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-purple-600/20"
+                    className="w-full py-3 px-4 rounded-xl font-lexend font-bold text-xs uppercase tracking-wider text-white bg-purple-600/20 hover:bg-purple-600 border border-purple-500/40 hover:border-purple-500 transition-all duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-purple-600/20 min-h-[44px]"
                   >
                     <svg className="w-4 h-4 text-purple-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
