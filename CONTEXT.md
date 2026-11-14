@@ -1,13 +1,19 @@
 # 📘 CONTEXT.md — Project Technical & Architectural Reference
 
-> **Purpose**: This document serves as the single source of truth for the technical architecture, data contracts, security models, and design patterns utilized across the **IITR Esports Platform**. Read this file before extending or refactoring any part of the codebase.
+> 📌 **CANONICAL GOLDEN CHECKPOINT**:
+> **Commit `a0c2828` (`host on private`) is the official user-approved Golden Checkpoint for this project.**  
+> If the user ever instructs to *"revert completely back"*, immediately restore both local and remote environments to this exact state.
 
 ---
 
 ## 1. Project Overview & Vision
 - **Organization**: IIT Roorkee Esports Club.
-- **Goal**: Provide a competitive gaming portal for hosting collegiate tournaments, managing verified team rosters, broadcasting LAN event media, enabling community engagement, and offering administrative tournament bracket operations.
-- **Target Games**: Valorant, BGMI, Counter-Strike 2 (CS2), Dota 2, and other collegiate esports titles.
+- **Goal**: Provide a competitive collegiate gaming portal for hosting tournaments, managing team rosters, publishing match schedules, streaming LAN events, and handling administrative bracket operations.
+- **Target Games**: Valorant, BGMI, Counter-Strike 2 (CS2), Dota 2, and other competitive esports titles.
+
+### 1.1 Strict Project Operational Rules
+- **GIT CONSTRAINT (ABSOLUTE)**: **NEVER run `git push` or `git pull`**. The user explicitly mandated: *"i should be the one to push and pull you should never do it"*. All changes must remain strictly local or directly deployed to the server via SSH/SCP.
+- **Golden Checkpoint Baseline**: Any UI changes or extensions must build upon and respect the layout established in commit `a0c2828`.
 
 ---
 
@@ -17,24 +23,25 @@
 | :--- | :--- | :--- | :--- |
 | **Framework** | Next.js (App Router) | `14.1.0` | React Server Components, Server Actions, streaming, dynamic routing |
 | **Language** | JavaScript (ESNext) | — | Pure JS with `jsconfig.json` module path resolution (`@/*`) |
-| **Styling** | Tailwind CSS | `3.3.0` | Utility-first dark gaming theme, glassmorphism, responsive grid |
-| **Database** | PostgreSQL | `15+` | Relational data persistence |
-| **ORM** | Prisma ORM | `5.22.0` | Type-safe query building, migrations, schema modeling |
+| **Styling** | Tailwind CSS | `3.3.0` | Dark gaming theme, custom gradients, responsive grid |
+| **Database** | PostgreSQL | `14+` | Production relational database running locally on AWS EC2 |
+| **ORM** | Prisma ORM | `5.22.0` | Type-safe schema modeling, queries, and seeding |
 | **Auth** | NextAuth.js | `4.24.5` | OAuth (Google & Discord), JWT session strategy, RBAC |
 | **Auth Adapter**| `@next-auth/prisma-adapter` | `1.0.7` | Syncs OAuth accounts and sessions to PostgreSQL |
 | **Validation** | Zod | `3.23.8` | Schema validation on client and server |
 | **Forms** | React Hook Form | `7.x` | High-performance uncontrolled form handling with Zod resolvers |
+| **Daemon / Process**| PM2 | `5.x+` | 24/7 background process management and auto-boot recovery |
+| **Reverse Proxy** | Nginx | `1.24+` | Reverse proxy on ports 80 and 443 with WebSocket support |
 
 ---
 
 ## 3. Directory Layout & Module Aliasing
 
-All frontend source files reside inside `frontend/src`.
 The module alias `@/*` maps directly to `frontend/src/*` via **`frontend/jsconfig.json`**:
 
 ```text
 e:\coding\esports\main website\
-├── start.bat                     # Windows one-click launcher
+├── start.bat                     # Windows one-click local launcher
 ├── README.md                     # High-level overview & setup
 ├── CONTEXT.md                    # Technical reference document (this file)
 ├── .gitignore                    # Root gitignore (RSA keys, certs, .env)
@@ -42,10 +49,11 @@ e:\coding\esports\main website\
     ├── jsconfig.json             # Root path aliasing: "@/*" -> "./src/*"
     ├── package.json              # NPM scripts and production dependencies
     ├── prisma/
-    │   └── schema.prisma         # Relational database schema
+    │   ├── schema.prisma         # Relational database schema
+    │   └── seed.js               # Database seeding script (admin, teams, tournaments)
     ├── public/
     │   └── assets/
-    │       ├── hero-portal.png   # Cinematic background portal image
+    │       ├── heroBG.png        # Hero background asset
     │       ├── image 20.svg      # Club vector logo
     │       └── menu.png          # Mobile drawer toggle icon
     └── src/
@@ -55,154 +63,103 @@ e:\coding\esports\main website\
         │   └── prisma.js         # PrismaClient singleton (prevents connection leaks)
         └── app/
             ├── layout.js         # Root HTML, SEO metadata, & AuthProvider wrapper
-            ├── page.js           # Dynamic landing page
+            ├── page.js           # Landing page (Navbar, Hero, MatchesSpotlight, NewsFeed, Footer)
             ├── actions/
             │   ├── adminActions.js # Mutations: createTournament, updateMatchScore, updateGamerTag
+            │   ├── tournamentActions.js # Team registration mutation
             │   └── contact.js      # Mutation: sendContactEmail with Zod verification
             ├── api/
             │   └── auth/
             │       └── [...nextauth]/route.js # NextAuth HTTP handler
             ├── Components/
-            │   ├── AuthProvider.js # Client wrapper for NextAuth SessionProvider
-            │   ├── Hero.js         # Server Component: Auth-aware hero with portal art
-            │   ├── MatchesSpotlight.js # Server Component: Live & upcoming match cards
-            │   ├── NewsFeed.js     # Server Component: Latest announcements feed
-            │   ├── Navbar/         # Responsive navigation header
-            │   └── Footer.js       # Sponsors, quick links, and social links
+            │   ├── AuthProvider.js # Client wrapper for NextAuth SessionProvider + Toaster
+            │   ├── Button.js       # Action button component
+            │   ├── Footer.js       # Global footer with sponsors and links
+            │   ├── Hero.js         # Auth-aware Hero component
+            │   ├── MatchesSpotlight.js # Live and scheduled matches spotlight
+            │   ├── NewsFeed.js     # Club announcements and updates feed
+            │   ├── SignOutButton.js # Client logout button
+            │   ├── Hero/
+            │   │   ├── Hero.js     # Component reference
+            │   │   └── Hero.css    # .playtime gradient and .HeroBg
+            │   └── Navbar/
+            │       ├── Navbar.js   # Navigation header with auth state
+            │       └── Navbar.css  # .navlinkStyle hover effect
             ├── events/
-            │   ├── page.js         # Browse tournaments by status (Upcoming / Completed)
+            │   ├── page.js         # Tournament schedule catalog
             │   └── [id]/
             │       ├── page.js     # Tournament fixture brackets
-            │       └── RegisterTeamButton.js # Client component for team registration modal
-            ├── teams/page.js       # Official rosters, team cards, and player IGNs
+            │       └── RegisterTeamButton.js # Team registration modal
+            ├── teams/page.js       # Official rosters and player IGNs
             ├── media/page.js       # 1080p stream embed + masonry LAN photo gallery
             ├── about/page.js       # History, mission, milestones, and executive committee
             ├── contact/page.js     # React Hook Form + Zod inquiry dispatch
-            ├── login/page.js       # Custom glassmorphism OAuth login page
+            ├── login/page.js       # Glassmorphism OAuth login page
             ├── dashboard/
             │   ├── page.js         # Protected player portal (roster, matches, identity)
-            │   └── EditProfileModal.js # Client modal for updating player gamerTag
+            │   └── EditProfileModal.js # Modal for updating player gamerTag
             └── admin/
-                ├── layout.js       # Admin sidebar & strict Server Component role check
+                ├── layout.js       # Strict Server Component role check
                 ├── page.js         # Real-time telemetry, stats, and tournament list
-                └── CreateTournamentForm.js # Client component invoking createTournament
+                └── CreateTournamentForm.js # Tournament creation form
 ```
 
 ---
 
-## 4. Database Schema & Data Models
+## 4. Production Server Infrastructure (AWS EC2)
 
-Defined in **`frontend/prisma/schema.prisma`**:
-
-### Enums
-- **`Role`**: `USER`, `ADMIN` (Used for Role-Based Access Control).
-- **`TournamentStatus`**: `UPCOMING`, `ONGOING`, `COMPLETED`.
-
-### Models & Relations
-1. **`User`**:
-   - Fields: `id`, `name`, `email`, `emailVerified`, `image`, `gamerTag` (unique IGN), `discordId` (unique), `role` (`Role`, default `USER`).
-   - Relations:
-     - `accounts`: NextAuth OAuth accounts (`Account[]`).
-     - `sessions`: NextAuth sessions (`Session[]`).
-     - `captainOf`: Teams where this user is captain (`Team[] @relation("TeamCaptain")`).
-     - `team`: Team this user belongs to (`Team? @relation("TeamMembers")`).
-     - `announcements`: Dispatches authored by this user (`Announcement[]`).
-
-2. **`Account` & `Session` & `VerificationToken`**:
-   - Standard NextAuth models storing OAuth tokens (`refresh_token`, `access_token`, `id_token`).
-
-3. **`Team`**:
-   - Fields: `id`, `name` (unique), `captainId`, timestamps.
-   - Relations:
-     - `captain`: Captain user relation (`User`).
-     - `members`: Roster players (`User[]`).
-     - `matchesAsA` & `matchesAsB`: Matches where team participates (`Match[]`).
-
-4. **`Tournament`**:
-   - Fields: `id`, `title`, `gameTitle` (e.g. Valorant, BGMI, CS2), `startDate`, `endDate`, `format` (e.g. Single Elimination, Double Elimination), `status` (`TournamentStatus`), timestamps.
-   - Relations:
-     - `matches`: Scheduled fixtures in this tournament (`Match[]`).
-
-5. **`Match`**:
-   - Fields: `id`, `tournamentId`, `teamA_Id`, `teamB_Id`, `score` (e.g. "13-9"), `scheduledTime`, timestamps.
-   - Relations:
-     - `tournament`: Parent tournament (`Tournament`).
-     - `teamA` & `teamB`: Competing teams (`Team`).
-
-6. **`Announcement`**:
-   - Fields: `id`, `title`, `content` (Text), `date` (DateTime default now), `authorId`, timestamps.
-   - Relations:
-     - `author`: Admin user who published the post (`User`).
+- **Instance ID**: `i-0e190800e17c0e995`
+- **Instance Type**: `t3a.medium` (2 vCPU, 4GB RAM, 80GB Disk)
+- **Public IP**: `13.233.117.195`
+- **Private IP**: `10.0.1.57`
+- **Operating System**: Ubuntu 22.04 LTS
+- **SSH Access**: `ubuntu@13.233.117.195` via `E-Sports-Server-keypair.pem`
+- **Control Panel**: aaPanel `v8.0.7` at `http://13.233.117.195:7800/b987d99b`
+- **Process Manager (PM2)**:
+  - App Name: `esports-platform`
+  - Internal Port: `http://127.0.0.1:3000`
+  - Auto-start configured via systemd (`pm2 startup` / `pm2 save`).
+- **Nginx Reverse Proxy**:
+  - Configuration: `/www/server/panel/vhost/nginx/esports.conf`
+  - Listens on Port 80 (HTTP) and Port 443 (HTTPS).
+  - Crucial setting: `proxy_cache off;` (prevents Nginx from serving stale cached responses).
+- **Database (PostgreSQL 14)**:
+  - Connection: `postgresql://esports_admin:esports_secure_pass_2026@localhost:5432/esports_site?schema=public`
+  - Default Admin: `admin@iitresports.com` / `AdminPassword@123`
+  - Seeded Content: 3 official teams (*Roorkee Titans*, *Phoenix Syndicate*, *Apex Predators*), 3 tournaments (Valorant, BGMI, CS2), fixtures, and announcements.
 
 ---
 
-## 5. Authentication, JWT & Access Control (RBAC)
+## 5. Deployment Protocol (No Git Push)
 
-### Central Auth File: `src/lib/auth.js`
-- **Session Strategy**: `strategy: "jwt"` (stores session token in secure cookies, eliminating DB calls on each request).
-- **Providers**: Google OAuth (`GoogleProvider`) and Discord OAuth (`DiscordProvider`).
-- **Callbacks**:
-  - `jwt`: Injects `user.id`, `user.role`, `user.gamerTag`, and `user.discordId` into the JWT token.
-  - `session`: Copies token fields onto `session.user` so Client and Server Components have access to `session.user.role` and `session.user.gamerTag`.
-  - Supports client session updates (`update({ gamerTag })`).
-
-### Route Protection: `src/middleware.js`
-- Uses NextAuth's `withAuth` middleware wrapper:
-  - **`/dashboard/:path*`**: Requires valid authenticated token (`!!token`). Unauthenticated users are redirected to `/login`.
-  - **`/admin/:path*`**: Requires valid token AND `token.role === "ADMIN"`. Non-admin users are immediately redirected to the homepage (`/`).
-
-### Server Component Defense-in-Depth
-- `src/app/admin/layout.js` performs an additional server-side check with `getServerSession(authOptions)`:
-  ```javascript
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user || session.user.role !== "ADMIN") {
-    redirect("/");
-  }
-  ```
+Whenever changes are verified locally and need to be deployed to the live server:
+1. Ensure `npm run build` passes with zero errors locally.
+2. Package updated source files:
+   ```bash
+   tar --exclude="node_modules" --exclude=".next" -czf update.tar.gz src
+   ```
+3. Transfer to AWS EC2:
+   ```bash
+   scp -i E-Sports-Server-keypair.pem frontend/update.tar.gz ubuntu@13.233.117.195:/tmp/
+   ```
+4. Extract, rebuild, and reload PM2 on server:
+   ```bash
+   ssh -i E-Sports-Server-keypair.pem ubuntu@13.233.117.195 "sudo tar -xzf /tmp/update.tar.gz -C /var/www/esports-platform/ && rm -f /tmp/update.tar.gz && cd /var/www/esports-platform && npm run build && pm2 restart esports-platform"
+   ```
+5. Purge Nginx proxy cache if any static assets were modified:
+   ```bash
+   ssh -i E-Sports-Server-keypair.pem ubuntu@13.233.117.195 "sudo rm -rf /www/server/nginx/proxy_cache_dir/* && sudo nginx -s reload"
+   ```
 
 ---
 
-## 6. Server Actions & Mutations
+## 6. Mobile Optimization & Responsiveness Standards (Audit Completed)
 
-Located in `src/app/actions/`:
-
-1. **`adminActions.js`** (`"use server"`):
-   - **`createTournament(formData)`**:
-     - Enforces `verifyAdminSession()`.
-     - Extracts fields, creates record in Prisma, and triggers `revalidatePath("/admin")`, `revalidatePath("/events")`, and `revalidatePath("/")`.
-   - **`updateMatchScore(matchId, score)`**:
-     - Enforces `verifyAdminSession()`.
-     - Updates match score in Prisma and triggers `revalidatePath`.
-   - **`updateGamerTag(gamerTag)`**:
-     - Verifies session for logged-in player.
-     - Updates `user.gamerTag` and revalidates `/dashboard` and `/teams`.
-
-2. **`contact.js`** (`"use server"`):
-   - **`sendContactEmail(data)`**:
-     - Server-side validation using `contactSchema` (Zod).
-     - Hook for email delivery services (Resend / Nodemailer).
-
----
-
-## 7. Data Resilience & Graceful Fallbacks
-
-To ensure smooth local development before a PostgreSQL database is initialized:
-- All database queries in public Server Components (`MatchesSpotlight.js`, `NewsFeed.js`, `events/page.js`, `teams/page.js`, `events/[id]/page.js`) are wrapped in `try...catch` blocks.
-- If the database is unreachable, components automatically render clean empty states (e.g. *"No upcoming matches scheduled at the moment"*, *"Past tournament archives will appear here"*) rather than crashing SSR rendering.
-
----
-
-## 8. Development & Tooling Conventions
-
-1. **Path Imports**: Always use `@/...` to reference `src/...` (e.g., `@/lib/auth`, `@/lib/prisma`, `@/app/Components/...`).
-2. **Configuration Priority**: Do **not** re-add an empty `tsconfig.json` unless migrating the entire project to TypeScript; the project is configured for pure JavaScript with `jsconfig.json`.
-3. **Execution Policies on Windows**:
-   - If Windows PowerShell prevents running scripts, execute via `.cmd` wrappers:
-     - `npx.cmd prisma generate`
-     - `npm.cmd run dev`
-4. **Environment Variables**:
-   - Local overrides go into `frontend/.env.local`.
-   - Always commit template changes to `frontend/.env.example`.
-5. **Security**:
-   - RSA `.pem` keys, `.env` files, and credentials are strictly ignored in `.gitignore`. Never commit keys to version control.
+All components, pages, and layouts have been audited and updated to be 100% responsive across devices from iPhone SE (320px) up to iPad Pro (1024px+):
+- **Navbar (`components/Navbar/Navbar.js`)**: Hamburger button wrapped in accessible button with $\ge 44$px touch target; mobile drawer links with `min-h-[44px]` touch targets and auto-close on selection.
+- **Hero (`components/Hero.js`)**: "PLAYTIME" headline scales `text-4xl sm:text-6xl md:text-8xl` with `break-words`; CTAs stack vertically (`flex-col sm:flex-row w-full sm:w-auto min-h-[44px]`).
+- **Matches Spotlight & News (`components/MatchesSpotlight.js`, `NewsFeed.js`)**: Fluid spacing `py-12 md:py-20 px-4 sm:px-6 md:px-16` and 44px tap targets for CTAs.
+- **Footer (`components/Footer.js`)**: Social icons sized at `w-11 h-11` ($\ge 44$px); 5th sponsor spans `col-span-2 sm:col-span-1` cleanly on 2-col mobile layout.
+- **Grids & Dashboards (`/teams`, `/events`, `/admin`, `/dashboard`)**: CSS grids collapse to 1 column on mobile (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`); admin data table wrapped in `w-full overflow-x-auto` with `min-w-[520px]`; forms feature full-width stacked inputs with `min-h-[44px]`.
+- **Media Gallery (`/media`)**: Responsive masonry without forced vertical stretch on mobile (`col-span-1 md:col-span-2 md:row-span-2`).
 
