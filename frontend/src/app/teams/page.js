@@ -36,7 +36,7 @@ export default async function TeamsPage() {
       },
     });
   } catch (error) {
-    console.error("Error fetching teams in TeamsPage:", error.message);
+    // Database connection offline fallback
     teams = [];
   }
 

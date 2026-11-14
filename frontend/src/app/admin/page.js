@@ -35,7 +35,7 @@ export default async function AdminOverviewPage() {
       include: { matches: true },
     });
   } catch (error) {
-    console.error("Admin stats query error:", error.message);
+    // Database connection offline fallback
   }
 
   const statCards = [

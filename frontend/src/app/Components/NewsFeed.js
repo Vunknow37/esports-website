@@ -20,7 +20,7 @@ export default async function NewsFeed() {
       },
     });
   } catch (error) {
-    console.error("Database connection error in NewsFeed:", error.message);
+    // Database connection offline fallback
     announcements = [];
   }
 

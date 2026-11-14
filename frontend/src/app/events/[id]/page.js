@@ -25,7 +25,7 @@ export default async function TournamentDetailPage({ params }) {
       },
     });
   } catch (error) {
-    console.error("Error fetching tournament:", error.message);
+    // Database connection offline fallback
   }
 
   // Graceful fallback for mock preview if database is not seeded yet

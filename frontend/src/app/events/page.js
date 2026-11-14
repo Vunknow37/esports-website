@@ -15,7 +15,7 @@ export default async function EventsPage() {
       },
     });
   } catch (error) {
-    console.error("Error fetching tournaments in EventsPage:", error.message);
+    // Database connection offline fallback
     tournaments = [];
   }
 

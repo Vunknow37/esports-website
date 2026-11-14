@@ -53,7 +53,7 @@ export default async function DashboardPage() {
       upcomingMatches = allMatches.slice(0, 3);
     }
   } catch (error) {
-    console.error("Dashboard data fetching error:", error.message);
+    // Database connection offline fallback
   }
 
   const user = dbUser || {

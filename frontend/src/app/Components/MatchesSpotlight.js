@@ -21,7 +21,7 @@ export default async function MatchesSpotlight() {
       },
     });
   } catch (error) {
-    console.error("Database connection error in MatchesSpotlight:", error.message);
+    // Database connection offline fallback
     matches = [];
   }
 
